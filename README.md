@@ -192,6 +192,36 @@ app.notFoundHandler = (ctx) => {
 app.listen();
 ```
 
+#### Redirect
+
+Run `bun index.ts`
+
+```typescript
+// index.ts
+import Bao from "baojs";
+
+const app = new Bao();
+
+app.get("/", (ctx) => {
+  // Create a new response object with a 301 status code and a Location header
+  const response = new Response(null, {
+    status: 301,
+    headers: {
+        "Location": "http://example.com"
+    }
+  });
+
+  // Assign the response object to the ctx.res property
+  ctx.res = response;
+
+  return ctx;
+});
+
+const server = app.listen();
+
+console.log(`Listening on ${server.hostname}:${server.port}`);
+```
+
 ### WebSockets
 
 Bao.js can handle the routing of WebSockets too. Under the hood, it takes advantage of the native Bun WebSocket which itself uses [µWebSockets](https://github.com/uNetworking/uWebSockets), a compiled and highly optimized web server.
